@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#dce8f0" />
+    <meta
+      name="description"
+      content="Discover Willow Hotel. Thoughtful rooms, unhurried moments and a softer side of the city. Explore your next stay."
+    />
+    <title>Willow Hotel — A softer side of the city</title>
+    <link rel="icon" href="/static/images/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/static/fonts/baskerville-regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link rel="preload" href="/static/images/lounge.jpg" as="image" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script src="/static/js/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <svg
+      class="svg-library"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <symbol id="icon-arrow" viewBox="0 0 24 24">
+        <path d="M4 12h15m-6-6 6 6-6 6" />
+      </symbol>
+      <symbol id="icon-close" viewBox="0 0 24 24">
+        <path d="m6 6 12 12M6 18 18 6" />
+      </symbol>
+      <symbol id="icon-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="3.4" />
+        <path d="M5 21v-2a7 7 0 0 1 14 0v2" />
+      </symbol>
+      <symbol id="icon-leaf" viewBox="0 0 48 48">
+        <path
+          d="M24 42V7M24 32C7 33 7 21 7 21s17-1 17 11Zm0-10C9 22 11 9 11 9s13 1 13 13Zm0 14c16 0 17-12 17-12s-17 0-17 12Zm0-19C36 16 35 5 35 5S24 7 24 17Z"
+        />
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <path d="m5 12 4 4L19 6" />
+      </symbol>
+    </svg>
+
+    <header class="site-header" id="top">
+      <div class="masthead page-width">
+        <div class="location-mark">
+          <span class="tiny-rule"></span>WARSAW, POLAND<br /><span class="muted"
+            >A place to slow down</span
+          >
+        </div>
+        <a class="wordmark" href="#top" aria-label="Willow Hotel home"
+          ><span class="monogram">W</span><span class="brand-name">WILLOW</span
+          ><span class="brand-subtitle"
+            >H O T E L &nbsp; · &nbsp; W A R S A W</span
+          ></a
+        >
+        <div class="header-actions">
+          <button class="plain-button account-trigger">
+            <svg><use href="#icon-user" /></svg
+            ><span class="account-label">Your stay</span></button
+          ><button
+            class="menu-toggle icon-button"
+            aria-expanded="false"
+            aria-controls="main-nav"
+            aria-label="Open menu"
+          >
+            <span></span><span></span>
+          </button>
+        </div>
+      </div>
+      <div class="nav-shell">
+        <nav
+          class="page-width main-nav"
+          id="main-nav"
+          aria-label="Main navigation"
+        >
+          <a href="#about">The hotel</a><a href="#rooms">Rooms & suites</a
+          ><a href="#moments">Dining & wellbeing</a
+          ><a href="#gallery">Gallery</a
+          ><a href="#your-visit">Before you arrive</a>
+          <button class="button button-blue nav-book" data-book>
+            Book your stay <svg><use href="#icon-arrow" /></svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-label="Welcome to Willow Hotel">
+        <div class="hero-images">
+          <img
+            class="hero-image active"
+            src="/static/images/lounge.jpg"
+            alt="Sunlit lounge with natural textures and comfortable seating"
+            fetchpriority="high"
+          /><img
+            class="hero-image"
+            src="/static/images/family.jpg"
+            alt="An elegant room with soft blue curtains"
+            loading="lazy"
+          /><img
+            class="hero-image"
+            src="/static/images/dining.jpg"
+            alt="A warmly lit bar for unhurried evenings"
+            loading="lazy"
+          />
+        </div>
+        <div class="hero-shade"></div>
+        <div class="hero-copy">
+          <span class="eyebrow light">A WARM WELCOME TO WILLOW</span>
+          <h1>A softer side<br />of the city.</h1>
+          <p>Thoughtful spaces. Unhurried moments. Entirely yours.</p>
+          <a class="hero-link" href="#rooms"
+            >Find your place to unwind <svg><use href="#icon-arrow" /></svg
+          ></a>
+        </div>
+        <div class="hero-bottom page-width">
+          <a href="#about" class="scroll-cue"
+            ><span>↓</span> A LITTLE DISCOVERY</a
+          >
+          <div class="slide-controls" aria-label="Hero photographs">
+            <span id="slide-counter">01 / 03</span
+            ><button
+              class="slide-dot active"
+              aria-label="Show lounge photograph"
+              aria-pressed="true"
+              data-slide="0"
+            ></button
+            ><button
+              class="slide-dot"
+              aria-label="Show room photograph"
+              aria-pressed="false"
+              data-slide="1"
+            ></button
+            ><button
+              class="slide-dot"
+              aria-label="Show dining photograph"
+              aria-pressed="false"
+              data-slide="2"
+            ></button
+            ><button
+              class="slide-pause"
+              aria-label="Pause slideshow"
+              aria-pressed="false"
+            >
+              Ⅱ
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="booking-bar"
+        id="find-a-room"
+        aria-label="Search for a stay"
+      >
+        <form class="search-form page-width" id="search-form">
+          <div class="booking-invitation">
+            <span class="eyebrow">MAKE YOURSELF AT HOME</span
+            ><span>Your next chapter.</span>
+          </div>
+          <label class="date-field"
+            ><span>CHECK-IN</span
+            ><input
+              id="check-in"
+              name="check_in"
+              type="date"
+              required
+              aria-label="Check-in date"
+          /></label>
+          <label class="date-field"
+            ><span>CHECK-OUT</span
+            ><input
+              id="check-out"
+              name="check_out"
+              type="date"
+              required
+              aria-label="Check-out date"
+          /></label>
+          <label class="date-field guests-field"
+            ><span>GUESTS</span
+            ><select id="guests" name="guests" aria-label="Number of guests">
+              <option value="1">1 guest</option>
+              <option value="2" selected>2 guests</option>
+              <option value="3">3 guests</option>
+              <option value="4">4 guests</option>
+            </select></label
+          >
+          <button class="button button-dark" type="submit">
+            Check availability <svg><use href="#icon-arrow" /></svg>
+          </button>
+        </form>
+      </section>
+
+      <section class="intro section-space page-width reveal" id="about">
+        <svg class="botanical"><use href="#icon-leaf" /></svg
+        ><span class="eyebrow">THE WILLOW WAY</span>
+        <h2>In the heart of the city.<br /><em>A world of your own.</em></h2>
+        <p>
+          Some places invite you to do more. We invite you to feel a little more
+          at ease. Settle into considered interiors, find comfort in the small
+          details, and let Warsaw unfold at your own pace.
+        </p>
+        <a href="#rooms" class="text-link"
+          >Discover your stay <svg><use href="#icon-arrow" /></svg
+        ></a>
+      </section>
+
+      <section id="rooms" class="rooms-section">
+        <div class="section-heading page-width reveal">
+          <div>
+            <span class="eyebrow">ROOM TO BE YOURSELF</span>
+            <h2>Stay a little longer.</h2>
+          </div>
+          <p>
+            Three ways to make yourself at home.<br />One very warm welcome.
+          </p>
+        </div>
+        <div class="room-list page-width">
+          <article class="room-feature reveal">
+            <button
+              class="image-button room-photo"
+              data-gallery="1"
+              aria-label="View Classic room photograph"
+            >
+              <img
+                src="/static/images/classic.jpg"
+                alt="Classic room with a comfortable bed and soft lighting"
+                loading="lazy"
+              /><span class="image-caption">A CLOSER LOOK <span>↗</span></span>
+            </button>
+            <div class="room-copy">
+              <span class="eyebrow">01 &nbsp; / &nbsp; CLASSIC COLLECTION</span>
+              <h3>Comfort, beautifully<br />considered.</h3>
+              <p>
+                A quiet retreat after a day of discovery. Soft linens, warm
+                textures and all the room you need to simply switch off.
+              </p>
+              <div class="room-details">
+                <span>Classic room</span><span>Up to 2 guests</span>
+              </div>
+              <div class="room-action">
+                <span class="room-price" data-price="Classic"
+                  >Checking rates…</span
+                ><button class="text-link" data-room="Classic">
+                  Explore your stay <svg><use href="#icon-arrow" /></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="room-feature reverse reveal">
+            <button
+              class="image-button room-photo"
+              data-gallery="2"
+              aria-label="View Deluxe room photograph"
+            >
+              <img
+                src="/static/images/deluxe.jpg"
+                alt="Deluxe room with an inviting king-size bed and warm bedside lamps"
+                loading="lazy"
+              /><span class="image-caption">A CLOSER LOOK <span>↗</span></span>
+            </button>
+            <div class="room-copy">
+              <span class="eyebrow">02 &nbsp; / &nbsp; DELUXE COLLECTION</span>
+              <h3>A little extra space.<br />A little extra lovely.</h3>
+              <p>
+                For slow mornings and evenings that need no plans. A generous
+                setting, carefully chosen details and a sense of effortless
+                ease.
+              </p>
+              <div class="room-details">
+                <span>Deluxe room</span><span>Up to 2 guests</span>
+              </div>
+              <div class="room-action">
+                <span class="room-price" data-price="Deluxe"
+                  >Checking rates…</span
+                ><button class="text-link" data-room="Deluxe">
+                  Explore your stay <svg><use href="#icon-arrow" /></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="room-feature reveal">
+            <button
+              class="image-button room-photo"
+              data-gallery="3"
+              aria-label="View Family room photograph"
+            >
+              <img
+                src="/static/images/family.jpg"
+                alt="Family room with blue curtains and a comfortable lounge area"
+                loading="lazy"
+              /><span class="image-caption">A CLOSER LOOK <span>↗</span></span>
+            </button>
+            <div class="room-copy">
+              <span class="eyebrow">03 &nbsp; / &nbsp; FAMILY COLLECTION</span>
+              <h3>The best moments<br />are shared.</h3>
+              <p>
+                Space for everyone, and time for each other. A welcoming base
+                for little adventures, big conversations and memories made
+                together.
+              </p>
+              <div class="room-details">
+                <span>Family room</span><span>Up to 4 guests</span>
+              </div>
+              <div class="room-action">
+                <span class="room-price" data-price="Family"
+                  >Checking rates…</span
+                ><button class="text-link" data-room="Family">
+                  Explore your stay <svg><use href="#icon-arrow" /></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+        <p
+          class="catalog-status page-width"
+          id="catalog-status"
+          role="status"
+        ></p>
+      </section>
+
+      <section id="moments" class="moments-section section-space">
+        <div class="page-width">
+          <div class="section-heading reveal">
+            <div>
+              <span class="eyebrow">THE PLEASURE OF DOING LESS</span>
+              <h2>Make room for a moment.</h2>
+            </div>
+            <a href="#gallery" class="text-link"
+              >A glimpse of Willow <svg><use href="#icon-arrow" /></svg
+            ></a>
+          </div>
+          <div class="moments-grid">
+            <article class="moment-card reveal">
+              <button
+                class="image-button"
+                data-gallery="4"
+                aria-label="View the dining space"
+              >
+                <img
+                  src="/static/images/dining.jpg"
+                  alt="Warm wooden bar with softly glowing pendant lights"
+                  loading="lazy"
+                /><span class="image-caption"
+                  >THE WILLOW TABLE <span>↗</span></span
+                ></button
+              ><span class="eyebrow">SAVOUR THE EVERYDAY</span>
+              <h3>Good taste. Great company.</h3>
+              <p>
+                A morning coffee that becomes a conversation. An evening worth
+                lingering over. Pull up a chair and stay a while.
+              </p>
+            </article>
+            <article class="moment-card reveal">
+              <button
+                class="image-button"
+                data-gallery="5"
+                aria-label="View the pool"
+              >
+                <img
+                  src="/static/images/pool.jpg"
+                  alt="Clear blue water in a peaceful pool setting"
+                  loading="lazy"
+                /><span class="image-caption"
+                  >A MOMENT OF CALM <span>↗</span></span
+                ></button
+              ><span class="eyebrow">BREATHE A LITTLE DEEPER</span>
+              <h3>Your own kind of pause.</h3>
+              <p>
+                Leave your to-do list behind. A gentle swim, a quiet corner, a
+                moment that belongs to you. There is no hurry here.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="gallery" class="gallery-section section-space page-width">
+        <div class="section-heading reveal">
+          <div>
+            <span class="eyebrow">POSTCARDS FROM WILLOW</span>
+            <h2>A feeling, in every frame.</h2>
+          </div>
+          <span class="gallery-note">Take a closer look ↗</span>
+        </div>
+        <div class="gallery-grid reveal">
+          <button
+            class="image-button gallery-wide"
+            data-gallery="0"
+            aria-label="Open lounge photograph"
+          >
+            <img
+              src="/static/images/lounge.jpg"
+              alt="Light-filled lounge at Willow"
+              loading="lazy"
+            /></button
+          ><button
+            class="image-button"
+            data-gallery="3"
+            aria-label="Open family room photograph"
+          >
+            <img
+              src="/static/images/family.jpg"
+              alt="Blue accents in a restful bedroom"
+              loading="lazy"
+            /></button
+          ><button
+            class="image-button"
+            data-gallery="4"
+            aria-label="Open dining photograph"
+          >
+            <img
+              src="/static/images/dining.jpg"
+              alt="An intimate evening at the bar"
+              loading="lazy"
+            />
+          </button>
+        </div>
+      </section>
+
+      <section class="visit-section" id="your-visit">
+        <div class="page-width visit-grid">
+          <div class="reveal">
+            <span class="eyebrow">A FEW LITTLE DETAILS</span>
+            <h2>Before you<br /><em>make yourself at home.</em></h2>
+            <p>A smoother arrival starts here.</p>
+            <button class="button button-dark" data-book>
+              Plan your stay <svg><use href="#icon-arrow" /></svg>
+            </button>
+          </div>
+          <div class="visit-questions reveal">
+            <details open>
+              <summary>When can I check in and out?<span>+</span></summary>
+              <p>
+                Choose an arrival window between 14:00 and 22:00. Your room is
+                yours until 11:00 on your departure day. All times are local to
+                Warsaw.
+              </p>
+            </details>
+            <details>
+              <summary>How is my room selected?<span>+</span></summary>
+              <p>
+                Choose Classic, Deluxe or Family. We will reserve an available
+                room in your preferred category and include the room number in
+                your confirmation.
+              </p>
+            </details>
+            <details>
+              <summary>Can I change my plans?<span>+</span></summary>
+              <p>
+                You can cancel from Your stay before your selected arrival
+                window begins. To change your dates, cancel your existing
+                reservation and make a new one, subject to availability.
+              </p>
+            </details>
+            <details>
+              <summary>How do reservations work?<span>+</span></summary>
+              <p>
+                Create an account, choose your dates and confirm your room.
+                View and manage your reservations from Your stay.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing-note section-space reveal">
+        <svg class="botanical"><use href="#icon-leaf" /></svg
+        ><span class="eyebrow">WE WILL SAVE YOU A LITTLE CALM</span>
+        <h2>See you at Willow.</h2>
+        <button class="text-link" data-book>
+          Find your next stay <svg><use href="#icon-arrow" /></svg>
+        </button>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-width footer-main">
+        <a class="wordmark" href="#top"
+          ><span class="brand-name">WILLOW</span
+          ><span class="brand-subtitle"
+            >H O T E L &nbsp; · &nbsp; W A R S A W</span
+          ></a
+        >
+        <div>
+          <span class="eyebrow">EXPLORE</span><a href="#about">The hotel</a
+          ><a href="#rooms">Rooms & suites</a><a href="#gallery">Gallery</a>
+        </div>
+        <div>
+          <span class="eyebrow">YOUR VISIT</span
+          ><button class="plain-button account-trigger">
+            Your reservations</button
+          ><a href="#your-visit">Arrival & cancellation</a
+          ><button class="plain-button" data-book>Find a room</button>
+        </div>
+        <div class="footer-hours">
+          <span class="eyebrow">TAKE YOUR TIME</span>
+          <p>Check-in &nbsp; 14:00–22:00<br />Check-out &nbsp; 11:00</p>
+          <span>Warsaw, Poland</span>
+        </div>
+      </div>
+      <div class="page-width footer-bottom">
+        <span
+          >© <span id="year">2026</span> Willow Hotel.</span
+        ><span>Thoughtfully made. Quietly different.</span
+        ><a href="#top">Back to top ↑</a>
+      </div>
+    </footer>
+
+    <dialog
+      id="reservation-dialog"
+      class="reservation-dialog"
+      aria-labelledby="reservation-title"
+    >
+      <div class="dialog-top">
+        <span class="eyebrow">YOUR WILLOW ESCAPE</span
+        ><button class="icon-button" data-close aria-label="Close reservation">
+          <svg><use href="#icon-close" /></svg>
+        </button>
+      </div>
+      <div class="dialog-content">
+        <h2 id="reservation-title" tabindex="-1">Find your little retreat.</h2>
+        <p id="reservation-dates" class="muted"></p>
+        <div id="reservation-content"></div>
+        <p class="form-message" id="reservation-message" role="status"></p>
+      </div>
+    </dialog>
+
+    <dialog id="auth-dialog" class="auth-dialog" aria-labelledby="auth-title">
+      <div class="dialog-top">
+        <span class="eyebrow">AT HOME WITH WILLOW</span
+        ><button class="icon-button" data-close aria-label="Close sign in">
+          <svg><use href="#icon-close" /></svg>
+        </button>
+      </div>
+      <div class="dialog-content">
+        <span class="monogram dialog-monogram">W</span>
+        <h2 id="auth-title">Welcome back.</h2>
+        <p class="muted" id="auth-description">
+          Sign in to plan a stay or revisit your reservations.
+        </p>
+        <form id="auth-form">
+          <label id="full-name-field" hidden
+            >Full name<input
+              name="full_name"
+              autocomplete="name"
+              maxlength="100" /></label
+          ><label
+            >Email address<input
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              maxlength="254"
+              placeholder="you@example.com" /></label
+          ><label
+            >Password<input
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+              minlength="8"
+              maxlength="128"
+              placeholder="At least 8 characters"
+          /></label>
+          <p id="auth-message" class="form-message" role="status"></p>
+          <button
+            class="button button-dark full-width"
+            id="auth-submit"
+            type="submit"
+          >
+            Sign in <svg><use href="#icon-arrow" /></svg>
+          </button>
+        </form>
+        <p class="auth-switch">
+          <span id="auth-switch-copy">New to Willow?</span>
+          <button class="text-link" id="auth-switch">Create an account</button>
+        </p>
+      </div>
+    </dialog>
+
+    <dialog
+      id="account-dialog"
+      class="account-dialog"
+      aria-labelledby="account-title"
+    >
+      <div class="dialog-top">
+        <span class="eyebrow">YOUR LITTLE GETAWAYS</span
+        ><button class="icon-button" data-close aria-label="Close your stays">
+          <svg><use href="#icon-close" /></svg>
+        </button>
+      </div>
+      <div class="dialog-content">
+        <div class="account-heading">
+          <h2 id="account-title">Your stays.</h2>
+          <button class="text-link" id="logout-button">Sign out</button>
+        </div>
+        <p class="muted" id="account-greeting"></p>
+        <div id="account-content"></div>
+        <p id="account-message" class="form-message" role="status"></p>
+      </div>
+    </dialog>
+
+    <dialog
+      id="gallery-dialog"
+      class="gallery-dialog"
+      aria-label="Photo gallery"
+    >
+      <button
+        class="icon-button gallery-close"
+        data-close
+        aria-label="Close gallery"
+      >
+        <svg><use href="#icon-close" /></svg></button
+      ><img
+        id="gallery-image"
+        src="/static/images/lounge.jpg"
+        alt="Willow lounge"
+      />
+      <div class="lightbox-controls">
+        <button
+          class="icon-button"
+          id="gallery-prev"
+          aria-label="Previous photograph"
+        >
+          ←</button
+        ><span id="gallery-caption"></span
+        ><button
+          class="icon-button"
+          id="gallery-next"
+          aria-label="Next photograph"
+        >
+          →
+        </button>
+      </div>
+    </dialog>
+    <div id="toast" class="toast" role="status"></div>
+    <noscript
+      ><p class="noscript-note">
+        Please enable JavaScript to search availability, sign in and manage
+        reservations.
+      </p></noscript
+    >
+  </body>
+</html>
