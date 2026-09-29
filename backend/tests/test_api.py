@@ -105,17 +105,21 @@ def test_booking_price_persistence_and_privacy(client, account):
 
 def test_availability_capacity_and_cancellation(client, account):
     headers = account()
+    second_guest = account("second@example.com")
+    third_guest = account("third@example.com")
     params = {key: value for key, value in stay().items() if key in ("check_in", "check_out", "guests")}
     availability = client.get("/availability", params=params)
     assert availability.status_code == 200, availability.text
     assert availability.json()[0]["available_rooms"] == 2
     ids = []
-    for expected_number in ("101", "102"):
-        response = client.post("/bookings", json=stay(), headers=headers)
+    for expected_number, guest in (("101", headers), ("102", second_guest)):
+        response = client.post("/bookings", json=stay(), headers=guest)
         assert response.status_code == 201
         assert response.json()["room"]["number"] == expected_number
         ids.append(response.json()["id"])
-    assert client.post("/bookings", json=stay(), headers=headers).status_code == 409
+    unavailable = client.post("/bookings", json=stay(), headers=third_guest)
+    assert unavailable.status_code == 409
+    assert unavailable.json()["detail"] == "No rooms available for these dates"
     assert client.get("/availability", params=params).json()[0]["available_rooms"] == 0
     for _ in range(2):
         response = client.post(f"/bookings/{ids[0]}/cancel", headers=headers)
@@ -182,16 +186,16 @@ def test_same_day_arrival_window_boundary(client, account, monkeypatch):
 
 
 def test_concurrent_booking_requests(client, account):
-    headers = account()
+    guests = [account(f"guest{i}@example.com") for i in range(3)]
     barrier = Barrier(3)
 
-    def reserve():
+    def reserve(headers):
         with TestClient(app) as parallel_client:
             barrier.wait(timeout=10)
             return parallel_client.post("/bookings", json=stay(), headers=headers)
 
     with ThreadPoolExecutor(max_workers=3) as executor:
-        responses = list(executor.map(lambda _: reserve(), range(3)))
+        responses = list(executor.map(reserve, guests))
     assert sorted(response.status_code for response in responses) == [201, 201, 409]
     room_ids = [response.json()["room"]["id"] for response in responses if response.status_code == 201]
     assert len(set(room_ids)) == 2
@@ -199,10 +203,11 @@ def test_concurrent_booking_requests(client, account):
 
 def test_database_rejects_overlap_even_without_api(client, account):
     client.post("/bookings", json=stay(), headers=account())
+    other_id = client.get("/auth/me", headers=account("other@example.com")).json()["id"]
     with SessionLocal() as db:
         existing = db.scalar(select(Booking))
         duplicate = Booking(
-            user_id=existing.user_id, room_id=existing.room_id,
+            user_id=other_id, room_id=existing.room_id,
             check_in=existing.check_in, check_out=existing.check_out,
             arrival_window=existing.arrival_window, guests=1,
             total_price=10000, currency="PLN",
@@ -211,6 +216,60 @@ def test_database_rejects_overlap_even_without_api(client, account):
         with pytest.raises(IntegrityError) as error:
             db.commit()
         assert error.value.orig.sqlstate == "23P01"
+        assert error.value.orig.diag.constraint_name == "no_overlapping_bookings"
+        db.rollback()
+
+
+@pytest.mark.parametrize("room_type_id", [1, 2, 3])
+@pytest.mark.parametrize("start,end", [(10, 12), (9, 11), (11, 13), (9, 13), (10, 11)])
+def test_account_cannot_reserve_overlapping_stays(client, account, room_type_id, start, end):
+    headers = account()
+    assert client.post("/bookings", json=stay(), headers=headers).status_code == 201
+    today = datetime.now(HOTEL_ZONE).date()
+    response = client.post("/bookings", json=stay(
+        room_type_id=room_type_id,
+        check_in=(today + timedelta(days=start)).isoformat(),
+        check_out=(today + timedelta(days=end)).isoformat(),
+    ), headers=headers)
+    assert response.status_code == 409
+    assert response.json()["detail"] == "You already have a reservation for these dates"
+    assert len(client.get("/bookings", headers=headers).json()) == 1
+
+
+@pytest.mark.parametrize("room_types", [(1, 1, 1), (1, 2, 3)])
+def test_concurrent_reservations_for_one_account(client, account, room_types):
+    headers = account()
+    barrier = Barrier(3)
+
+    def reserve(room_type_id):
+        with TestClient(app) as parallel_client:
+            barrier.wait(timeout=10)
+            return parallel_client.post("/bookings", json=stay(room_type_id=room_type_id), headers=headers)
+
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        responses = list(executor.map(reserve, room_types))
+    assert sorted(response.status_code for response in responses) == [201, 409, 409]
+    for response in responses:
+        if response.status_code == 409:
+            assert response.json()["detail"] == "You already have a reservation for these dates"
+    assert len(client.get("/bookings", headers=headers).json()) == 1
+
+
+def test_database_rejects_account_overlap_in_another_room(client, account):
+    client.post("/bookings", json=stay(), headers=account())
+    with SessionLocal() as db:
+        existing = db.scalar(select(Booking))
+        other_room = db.scalar(select(Room).where(Room.room_type_id == 2))
+        db.add(Booking(
+            user_id=existing.user_id, room_id=other_room.id,
+            check_in=existing.check_in, check_out=existing.check_out,
+            arrival_window=existing.arrival_window, guests=1,
+            total_price=10000, currency="PLN",
+        ))
+        with pytest.raises(IntegrityError) as error:
+            db.commit()
+        assert error.value.orig.sqlstate == "23P01"
+        assert error.value.orig.diag.constraint_name == "no_overlapping_user_bookings"
         db.rollback()
 
 

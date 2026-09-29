@@ -801,28 +801,14 @@ function showSlide(index) {
   });
   $("#slide-counter").textContent = `0${slide + 1} / 03`;
 }
-function updatePause() {
-  $(".slide-pause").setAttribute(
-    "aria-label",
-    slidePaused ? "Play slideshow" : "Pause slideshow",
-  );
-  $(".slide-pause").setAttribute("aria-pressed", String(slidePaused));
-  $(".slide-pause").textContent = slidePaused ? "▷" : "Ⅱ";
-}
 $$("[data-slide]").forEach((control) =>
   control.addEventListener("click", () => {
     showSlide(Number(control.dataset.slide));
     slidePaused = true;
-    updatePause();
   }),
 );
-$(".slide-pause").addEventListener("click", () => {
-  slidePaused = !slidePaused;
-  updatePause();
-});
 reducedMotion.addEventListener("change", () => {
   slidePaused = reducedMotion.matches;
-  updatePause();
 });
 setInterval(() => {
   if (
@@ -833,7 +819,6 @@ setInterval(() => {
   )
     showSlide(slide + 1);
 }, 7000);
-updatePause();
 
 let galleryIndex = 0;
 function showPhoto(index) {

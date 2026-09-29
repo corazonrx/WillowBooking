@@ -20,6 +20,17 @@ def free_rooms_query(room_type_id: int, check_in: date, check_out: date):
 
 
 def create_booking(db: Session, user: User, data: BookingCreate) -> Booking:
+    # Lock the account first, including reservations across different categories.
+    db.scalar(select(User).where(User.id == user.id).with_for_update())
+    overlapping_stay = db.scalar(select(Booking.id).where(
+        Booking.user_id == user.id,
+        Booking.status == "confirmed",
+        Booking.check_in < data.check_out,
+        Booking.check_out > data.check_in,
+    ).limit(1))
+    if overlapping_stay is not None:
+        raise HTTPException(status_code=409, detail="You already have a reservation for these dates")
+
     # Serialize reservations in this category until the transaction commits.
     room_type = db.scalar(select(RoomType).where(RoomType.id == data.room_type_id).with_for_update())
     if room_type is None:
@@ -47,6 +58,8 @@ def create_booking(db: Session, user: User, data: BookingCreate) -> Booking:
     except IntegrityError as exc:
         db.rollback()
         if getattr(exc.orig, "sqlstate", None) == "23P01":
+            if exc.orig.diag.constraint_name == "no_overlapping_user_bookings":
+                raise HTTPException(status_code=409, detail="You already have a reservation for these dates") from None
             raise HTTPException(status_code=409, detail="No rooms available for these dates") from None
         raise
     db.refresh(booking)

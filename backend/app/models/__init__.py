@@ -64,6 +64,13 @@ class Booking(Base):
             name="no_overlapping_bookings",
             using="gist",
         ),
+        ExcludeConstraint(
+            ("user_id", "="),
+            (func.daterange(text("check_in"), text("check_out"), "[)"), "&&"),
+            where=text("status = 'confirmed'"),
+            name="no_overlapping_user_bookings",
+            using="gist",
+        ),
     )
 
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)

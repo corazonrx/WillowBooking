@@ -449,11 +449,16 @@ em {
 .scroll-cue > span {
   border: 1px solid #ffffff75;
   border-radius: 50%;
-  font-size: 19px;
+  line-height: 1;
+  letter-spacing: 0;
   width: 35px;
   height: 35px;
   display: grid;
   place-items: center;
+}
+.scroll-cue svg {
+  width: 20px;
+  height: 20px;
 }
 .slide-controls {
   display: flex;
@@ -481,12 +486,6 @@ em {
 }
 .slide-dot.active:after {
   background: white;
-}
-.slide-pause {
-  color: white;
-  font-size: 13px;
-  width: 32px;
-  height: 36px;
 }
 .booking-bar {
   background: var(--pale);
@@ -1578,16 +1577,16 @@ dialog[open] {
   .scroll-cue > span {
     width: 29px;
     height: 29px;
-    font-size: 16px;
+  }
+  .scroll-cue svg {
+    width: 18px;
+    height: 18px;
   }
   .slide-controls > span {
     display: none;
   }
   .slide-dot {
     width: 24px;
-  }
-  .slide-pause {
-    width: 25px;
   }
   .date-field input,
   .date-field select {
