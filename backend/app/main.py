@@ -1,9 +1,12 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
 
 from app.config import BACKEND_DIR, settings
+from app.dependencies import DbSession
 from app.routers import auth, bookings, rooms
 from app.schemas import ARRIVAL_WINDOWS
 
@@ -22,7 +25,11 @@ def home(request: Request):
 
 
 @app.get("/api/health", tags=["Hotel"])
-def health():
+def health(db: DbSession):
+    try:
+        db.execute(text("SELECT 1"))
+    except SQLAlchemyError:
+        raise HTTPException(status_code=503, detail="Database is unavailable") from None
     return {"message": "Hotel is running"}
 
 
