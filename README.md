@@ -1,9 +1,5 @@
 # WillowBooking
 
-**A quieter kind of stay.**
-
-A booking website for Willow, a fictional boutique hotel in Warsaw. Pastel blue tones, serif typography and smooth transitions create a calm setting for browsing rooms and planning a stay.
-
 ![Willow Hotel homepage](docs/images/homepage.png)
 
 ## Features
